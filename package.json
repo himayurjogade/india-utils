@@ -1,6 +1,6 @@
 {
   "name": "india-utils",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Zero-dependency validators and formatters for Indian identifiers and numbers (PAN, GSTIN, IFSC, INR).",
   "keywords": [
     "india",
