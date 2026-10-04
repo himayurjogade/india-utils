@@ -53,7 +53,7 @@ function strip(value: string): string {
 
 /**
  * 12 digits, never starting 0 or 1, with a Verhoeff check digit last.
- * Confirms the number is well-formed — not that it is issued to anyone.
+ * Confirms the number is well-formed, not that it is issued to anyone.
  */
 export function isValidAadhaar(value: string): boolean {
   const v = strip(value);

@@ -6,8 +6,8 @@
 [![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](https://www.npmjs.com/package/india-utils?activeTab=dependencies)
 [![types](https://img.shields.io/npm/types/india-utils)](https://www.npmjs.com/package/india-utils)
 
-Validate and format Indian identifiers — PAN, GSTIN, Aadhaar, IFSC, PIN code,
-UPI — plus rupee amounts in lakh/crore grouping.
+Validate and format Indian identifiers: PAN, GSTIN, Aadhaar, IFSC, PIN code
+and UPI, plus rupee amounts in lakh/crore grouping.
 
 **No dependencies. 5.6 kB packed. ESM, CJS and TypeScript types included.**
 
@@ -18,8 +18,8 @@ npm i india-utils
 ```ts
 import { isValidGSTIN, isValidAadhaar, formatINR } from "india-utils";
 
-isValidGSTIN("27AAPFU0939F1ZV"); // true  — format + mod-36 checksum
-isValidAadhaar("2345 6789 0124"); // true — format + Verhoeff checksum
+isValidGSTIN("27AAPFU0939F1ZV"); // true (format + mod-36 checksum)
+isValidAadhaar("2345 6789 0124"); // true (format + Verhoeff checksum)
 formatINR(1234567); // "₹12,34,567"
 ```
 
@@ -38,28 +38,28 @@ lowercase, and for Aadhaar the spaces or hyphens people type.
 
 | Function | Checks | Checksum |
 |---|---|:-:|
-| `isValidPAN(s)` | 5 letters, 4 digits, 1 letter, and a valid entity-type character | — |
+| `isValidPAN(s)` | 5 letters, 4 digits, 1 letter, and a valid entity-type character | none |
 | `isValidGSTIN(s)` | State code, embedded PAN, structure, and the 15th check character | mod-36 |
 | `isValidAadhaar(s)` | 12 digits, never starting 0 or 1, and the 12th check digit | Verhoeff |
-| `isValidIFSC(s)` | 4 bank letters, a literal `0`, 6 branch characters | — |
-| `isValidPincode(s)` | 6 digits, first being a real postal zone | — |
-| `isValidUPI(s)` | `local-part@handle` | — |
+| `isValidIFSC(s)` | 4 bank letters, a literal `0`, 6 branch characters | none |
+| `isValidPincode(s)` | 6 digits, first being a real postal zone | none |
+| `isValidUPI(s)` | `local-part@handle` | none |
 
 PAN, IFSC, PIN code and UPI have no public checksum, so those are shape checks
-by definition — not a shortcut taken here.
+by definition, not a shortcut taken here.
 
 ```ts
 isValidPAN("ABCPV1234D"); // true
-isValidPAN("ABCDV1234D"); // false — D is not an entity type
+isValidPAN("ABCDV1234D"); // false (D is not an entity type)
 isValidIFSC("HDFC0001234"); // true
 isValidPincode("110001"); // true
-isValidPincode("010001"); // false — there is no postal zone 0
+isValidPincode("010001"); // false (there is no postal zone 0)
 isValidUPI("9876543210@ybl"); // true
 ```
 
 ## Normalizers
 
-Each returns the cleaned-up value, or `null` if the input is invalid — so one
+Each returns the cleaned-up value, or `null` if the input is invalid, so one
 call both validates and gives you the form you want to store.
 
 ```ts
@@ -79,13 +79,13 @@ normalizePAN("not a pan"); // null
 import { formatINR, maskAadhaar, panFromGSTIN, verhoeffCheckDigit } from "india-utils";
 
 formatINR(1234567); // "₹12,34,567"
-formatINR(10000000); // "₹1,00,00,000"   — 1 crore
+formatINR(10000000); // "₹1,00,00,000"   (1 crore)
 formatINR(1234567, { symbol: false }); // "12,34,567"
 formatINR(1234.5, { decimals: 2 }); // "₹1,234.50"
 
-maskAadhaar("234567890124"); // "XXXX XXXX 0124"  — safe for logs and UI
+maskAadhaar("234567890124"); // "XXXX XXXX 0124"  (safe for logs and UI)
 panFromGSTIN("27AAPFU0939F1ZV"); // "AAPFU0939F"
-verhoeffCheckDigit("23456789012"); // "4"  — useful for generating test data
+verhoeffCheckDigit("23456789012"); // "4" (useful for generating test data)
 ```
 
 `formatINR` throws a `RangeError` on `NaN` or `Infinity` rather than quietly
@@ -101,7 +101,7 @@ Specifically:
 
 - `isValidIFSC` does not confirm the branch exists
 - `isValidPincode` does not confirm the PIN code is in use
-- `isValidUPI` does not confirm the VPA is registered — and since NPCI
+- `isValidUPI` does not confirm the VPA is registered. NPCI
   publishes no character-set or length spec, this check is deliberately
   permissive; wrongly rejecting a real VPA is the worse failure
 - Aadhaar encodes no date of birth, gender or location, so nothing here
@@ -110,8 +110,8 @@ Specifically:
 ## Notes
 
 Only `index.ts` defines the public API; everything else is internal. The
-package sets `"sideEffects": false` — import one validator and bundlers drop
-the rest.
+package sets `"sideEffects": false`, so importing one validator lets bundlers drop the
+rest.
 
 Requires Node 18+ (`formatINR` relies on `Intl` support for `en-IN`).
 
