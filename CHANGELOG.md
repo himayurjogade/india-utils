@@ -1,5 +1,13 @@
 # india-utils
 
+## 0.2.1
+
+### Patch Changes
+
+- 6aa6499: Rewrite the README: badges, a stated scope, validator tables with checksum
+  coverage, worked examples for every export, and an explicit "what this does
+  not do" section.
+
 ## 0.2.0
 
 ### Minor Changes
