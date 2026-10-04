@@ -11,6 +11,15 @@
     "validation"
   ],
   "license": "MIT",
+  "author": "Mayur Jogade",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himayurjogade/india-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/himayurjogade/india-utils/issues"
+  },
+  "homepage": "https://github.com/himayurjogade/india-utils#readme",
   "type": "module",
   "sideEffects": false,
   "files": [
