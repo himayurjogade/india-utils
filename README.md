@@ -1,13 +1,7 @@
 # india-utils
 
-[![npm](https://img.shields.io/npm/v/india-utils)](https://www.npmjs.com/package/india-utils)
-[![CI](https://github.com/himayurjogade/india-utils/actions/workflows/ci.yml/badge.svg)](https://github.com/himayurjogade/india-utils/actions/workflows/ci.yml)
-[![unpacked size](https://img.shields.io/npm/unpacked-size/india-utils)](https://www.npmjs.com/package/india-utils)
-[![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](https://www.npmjs.com/package/india-utils?activeTab=dependencies)
-[![types](https://img.shields.io/npm/types/india-utils)](https://www.npmjs.com/package/india-utils)
-
-Validate and format Indian identifiers: PAN, GSTIN, Aadhaar, IFSC, PIN code
-and UPI, plus rupee amounts in lakh/crore grouping.
+Validate and format Indian identifiers: PAN, GSTIN, Aadhaar, IFSC, PIN code,
+UPI and vehicle registration, plus rupee amounts in lakh/crore grouping.
 
 **No dependencies. 5.6 kB packed. ESM, CJS and TypeScript types included.**
 
@@ -44,9 +38,10 @@ lowercase, and for Aadhaar the spaces or hyphens people type.
 | `isValidIFSC(s)` | 4 bank letters, a literal `0`, 6 branch characters | none |
 | `isValidPincode(s)` | 6 digits, first being a real postal zone | none |
 | `isValidUPI(s)` | `local-part@handle` | none |
+| `isValidVehicleRegistration(s)` | State code, RTO code and series, or the newer BH series | none |
 
-PAN, IFSC, PIN code and UPI have no public checksum, so those are shape checks
-by definition, not a shortcut taken here.
+PAN, IFSC, PIN code, UPI and vehicle registration have no public checksum, so
+those are shape checks by definition, not a shortcut taken here.
 
 ```ts
 isValidPAN("ABCPV1234D"); // true
@@ -55,6 +50,7 @@ isValidIFSC("HDFC0001234"); // true
 isValidPincode("110001"); // true
 isValidPincode("010001"); // false (there is no postal zone 0)
 isValidUPI("9876543210@ybl"); // true
+isValidVehicleRegistration("MH12AB1234"); // true
 ```
 
 ## Normalizers
@@ -71,7 +67,8 @@ normalizeUPI(" Mayur@OkAxis "); // "mayur@okaxis"
 normalizePAN("not a pan"); // null
 ```
 
-`normalizeIFSC`, `normalizeGSTIN` and `normalizePincode` work the same way.
+`normalizeIFSC`, `normalizeGSTIN`, `normalizePincode` and
+`normalizeVehicleRegistration` work the same way.
 
 ## Formatting and helpers
 
@@ -104,6 +101,8 @@ Specifically:
 - `isValidUPI` does not confirm the VPA is registered. NPCI
   publishes no character-set or length spec, this check is deliberately
   permissive; wrongly rejecting a real VPA is the worse failure
+- `isValidVehicleRegistration` does not confirm the vehicle exists or that
+  the state code is a real one
 - Aadhaar encodes no date of birth, gender or location, so nothing here
   extracts any
 

@@ -10,3 +10,7 @@ export { isValidIFSC, normalizeIFSC } from "./ifsc.js";
 export { isValidPAN, normalizePAN } from "./pan.js";
 export { isValidPincode, normalizePincode } from "./pincode.js";
 export { isValidUPI, normalizeUPI } from "./upi.js";
+export {
+  isValidVehicleRegistration,
+  normalizeVehicleRegistration,
+} from "./vehicle.js";
